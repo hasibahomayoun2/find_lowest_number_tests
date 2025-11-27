@@ -1,3 +1,15 @@
+# NOTE:
+# My workflow looks a bit different from my instructor’s example, so I wanted
+# to explain why. In class, he used the “>” symbol because his demo program
+# printed its output to the terminal, and “>” simply redirects terminal output
+# into a file. My program works differently—it already writes its output
+# directly into a file, so I don’t need to use “>”. Instead, I pass both the
+# input and output file paths directly in the command using normal folder
+# structure like test_data/test1_input.txt. That’s why you’ll see “/” paths in
+# my version. Both styles are correct. The logic is exactly the same—checkout,
+# set up Python, run tests, and compare results—but my formatting is just more
+# descriptive for readability.
+
 name: Automated Test for find_lowest_number
 
 # This workflow will run every time we push something to the repo.
@@ -30,7 +42,7 @@ jobs:
         run: diff test_data/test1_expected.txt test1_output.txt
 
       # ------------------ TEST 2 ------------------
-      # Same process as Test 1, but using the single-number input file.
+      # Same process as Test 1, but using the one number input file.
       - name: Run Test 2 Program
         run: python find_lowest_number.py test_data/test2_input.txt test2_output.txt
 
