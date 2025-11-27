@@ -1,0 +1,48 @@
+name: Automated Test for find_lowest_number
+
+# This workflow will run every time we push something to the repo.
+on: [push]
+
+jobs:
+  automated_test:
+    name: Run Automated Tests
+    runs-on: ubuntu-latest   # GitHub gives us a fresh Ubuntu VM to run the tests
+
+    steps:
+      # This step downloads our repo into the runner so we can use the files inside it.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # We need Python available on the runner to run the find_lowest_number program.
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      # ------------------ TEST 1 ------------------
+      # Run the program using the first input file. It should produce test1_output.txt.
+      - name: Run Test 1 Program
+        run: python find_lowest_number.py test_data/test1_input.txt test1_output.txt
+
+      # Compare the expected output to the actual output using diff.
+      # If the files don't match, diff returns exit code 1 and the workflow fails.
+      - name: Compare Test 1 Output
+        run: diff test_data/test1_expected.txt test1_output.txt
+
+      # ------------------ TEST 2 ------------------
+      # Same process as Test 1, but using the single-number input file.
+      - name: Run Test 2 Program
+        run: python find_lowest_number.py test_data/test2_input.txt test2_output.txt
+
+      # Check if the output matches what we expect.
+      - name: Compare Test 2 Output
+        run: diff test_data/test2_expected.txt test2_output.txt
+
+      # ------------------ TEST 3 ------------------
+      # This test checks how the program behaves when the input file is blank.
+      - name: Run Test 3 Program
+        run: python find_lowest_number.py test_data/test3_input.txt test3_output.txt
+
+      # The expected output for a blank file is “No numbers found in file”.
+      - name: Compare Test 3 Output
+        run: diff test_data/test3_expected.txt test3_output.txt
